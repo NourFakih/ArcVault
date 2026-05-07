@@ -1,6 +1,5 @@
 # ArcVault AI Triage
-
-This folder is the submission-ready package for the ArcVault intake and triage assessment.
+ArcVault intake and triage assessment.
 
 ## Included
 
@@ -12,8 +11,6 @@ This folder is the submission-ready package for the ArcVault intake and triage a
   The OpenAI prompt used for classification, enrichment, and summary generation, plus rationale.
 - `docs/development_process.md`
   A short write-up of the implementation process, AI tool usage, and the main design decisions I kept or corrected manually.
-- `docs/demo_notes.md`
-  Suggested demo flow and screenshot checklist.
 - `outputs/triage_records.csv`
   Sample structured output records for the main queue.
 - `outputs/escalations.csv`
@@ -41,13 +38,40 @@ During development, I used AI tools to accelerate planning, prompt drafting, and
 
 One practical implementation choice was to keep message ID generation in Google Sheets using a formula rather than in n8n. This kept the n8n workflow focused on triage, routing, and escalation, while the sheet handled simple sequential IDs reliably for the demo. In production, I would move ID generation to a database, ticketing system, or backend service.
 
-## Before Submission
+## Demo and Live Artifacts
 
-- Review `n8n/arcvault_intake_triage_workflow.json` and confirm it is the exact final export you want to share.
-- Replace the sample screenshots folder contents with real screenshots from your final run.
-- If needed, replace the sample CSV outputs with the latest exported outputs from your actual test run.
+### Screen Recording
 
-## Notes
+A short screen recording is available here:
 
-- The files in `outputs/` are sample deliverables you can submit directly, but you can overwrite them with fresher exports if you run another final test.
-- The `screenshots/` folder is intentionally left as a placeholder because screenshots need to come from your own final environment.
+**YouTube Demo:** https://youtu.be/B6A5Z__VKRU 
+
+Note: The recording has no audio and is intended as a visual walkthrough of the workflow. It is best viewed at **2x speed**.
+
+The video shows:
+- The n8n workflow execution.
+- The Google Form intake submission.
+- The linked Google Sheets response row.
+- The OpenAI triage output.
+- The `triage_records` output tab.
+- The escalation path for human-review cases.
+- The Gmail escalation notification.
+
+### Live Google Form
+
+The intake form used to submit sample ArcVault requests is available here:
+
+**Google Form:** [\[ADD_GOOGLE_FORM_LINK_HERE\]](https://docs.google.com/forms/d/e/1FAIpQLSd0V06x33omApI_pKjYdFCzQJn5lx4k3vzIFX8i6Q3LNmqOEg/viewform)
+
+### Live Google Sheet Output
+
+The structured output records are available here:
+
+**Google Sheet:** [\[ADD_GOOGLE_SHEET_LINK_HERE\]](https://docs.google.com/spreadsheets/d/1_cMyED6brUMe9dd1UBjv3TIXDnvsgQ0n-TbessHj4DY)
+
+The Google Sheet contains:
+- `incoming_requests`: form-submitted input messages.
+- `triage_records`: structured classification, enrichment, routing, and escalation results.
+- `escalations`: human-review cases only.
+
+The `message_id` field is generated directly in Google Sheets using a formula, while n8n handles normalization, LLM triage, routing, escalation, and appending the final records.

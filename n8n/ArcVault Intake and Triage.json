@@ -39,23 +39,22 @@
           "item": [
             {
               "mode": "everyMinute"
-            },
-            {
-              "mode": "=everyDay"
             }
           ]
         },
         "documentId": {
           "__rl": true,
           "value": "1_cMyED6brUMe9dd1UBjv3TIXDnvsgQ0n-TbessHj4DY",
-          "mode": "id"
+          "mode": "list",
+          "cachedResultName": "ArcVault AI Intake Triage Results",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_cMyED6brUMe9dd1UBjv3TIXDnvsgQ0n-TbessHj4DY/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
-          "value": 1516760786,
+          "value": 1281404203,
           "mode": "list",
           "cachedResultName": "Form Responses 1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_cMyED6brUMe9dd1UBjv3TIXDnvsgQ0n-TbessHj4DY/edit#gid=1516760786"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_cMyED6brUMe9dd1UBjv3TIXDnvsgQ0n-TbessHj4DY/edit#gid=1281404203"
         },
         "event": "rowAdded",
         "options": {}
@@ -70,8 +69,8 @@
       ],
       "credentials": {
         "googleSheetsTriggerOAuth2Api": {
-          "id": "dhTAuORya5ukelz2",
-          "name": "Google Sheets Trigger OAuth2 API"
+          "id": "XLikOlZEf9EvpQNQ",
+          "name": "Google Sheets Trigger account"
         }
       }
     },
@@ -138,31 +137,31 @@
         },
         "sheetName": {
           "__rl": true,
-          "mode": "name",
-          "value": "triage_records"
+          "value": "triage_records",
+          "mode": "name"
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "message_id": "={{ $json.message_id }}",
             "source": "={{ $json.source }}",
             "raw_message": "={{ $json.raw_message }}",
             "category": "={{ $json.category }}",
             "priority": "={{ $json.priority }}",
             "confidence_score": "={{ $json.confidence_score }}",
             "core_issue": "={{ $json.core_issue }}",
-            "identifiers": "={{ JSON.stringify($json.identifiers ?? {}) }}",
+            "identifiers": "={{ $json.identifiers }}",
             "urgency_signal": "={{ $json.urgency_signal }}",
             "affected_scope": "={{ $json.affected_scope }}",
-            "actual_amount": "={{ $json.actual_amount ?? '' }}",
-            "expected_amount": "={{ $json.expected_amount ?? '' }}",
-            "discrepancy_amount": "={{ $json.discrepancy_amount ?? '' }}",
+            "actual_amount": "={{ $json.actual_amount }}",
+            "expected_amount": "={{ $json.expected_amount }}",
+            "discrepancy_amount": "={{ $json.discrepancy_amount }}",
             "standard_queue": "={{ $json.standard_queue }}",
             "destination_queue": "={{ $json.destination_queue }}",
-            "escalation_flag": "={{ $json.escalation_flag ? 'TRUE' : 'FALSE' }}",
-            "escalation_reason": "={{ $json.escalation_reason ?? '' }}",
+            "escalation_flag": "={{ $json.escalation_flag }}",
+            "escalation_reason": "={{ $json.escalation_flag }}",
             "summary": "={{ $json.summary }}",
-            "processed_at": "={{ $json.processed_at }}"
+            "processed_at": "={{ $json.processed_at }}",
+            "received_at": "={{ $json.received_at }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -173,7 +172,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "source",
@@ -329,6 +329,16 @@
               "canBeUsedToMatch": true
             },
             {
+              "id": "received_at",
+              "displayName": "received_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
               "id": "processed_at",
               "displayName": "processed_at",
               "required": false,
@@ -353,8 +363,8 @@
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "EbW0qhyUQxV80gFx",
-          "name": "Google Sheets OAuth2 API"
+          "id": "UBBczaeysvivWCyh",
+          "name": "Google Sheets account"
         }
       }
     },
@@ -371,10 +381,11 @@
             {
               "id": "3005e7ae-001d-480e-b161-0868f5267c94",
               "leftValue": "={{ $json[\"escalation_flag\"] }}",
-              "rightValue": "TRUE",
+              "rightValue": "true",
               "operator": {
-                "type": "string",
-                "operation": "equals"
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
               }
             }
           ],
@@ -397,33 +408,35 @@
         "documentId": {
           "__rl": true,
           "value": "1_cMyED6brUMe9dd1UBjv3TIXDnvsgQ0n-TbessHj4DY",
-          "mode": "id"
+          "mode": "list",
+          "cachedResultName": "ArcVault AI Intake Triage Results",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_cMyED6brUMe9dd1UBjv3TIXDnvsgQ0n-TbessHj4DY/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
-          "mode": "name",
-          "value": "escalations"
+          "value": "escalations",
+          "mode": "name"
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "message_id": "={{ $('Route + Escalate').item.json.message_id }}",
-            "source": "={{ $('Route + Escalate').item.json.source }}",
-            "raw_message": "={{ $('Route + Escalate').item.json.raw_message }}",
-            "category": "={{ $('Route + Escalate').item.json.category }}",
-            "priority": "={{ $('Route + Escalate').item.json.priority }}",
-            "confidence_score": "={{ $('Route + Escalate').item.json.confidence_score }}",
-            "core_issue": "={{ $('Route + Escalate').item.json.core_issue }}",
-            "identifiers": "={{ JSON.stringify($('Route + Escalate').item.json.identifiers ?? {}) }}",
-            "urgency_signal": "={{ $('Route + Escalate').item.json.urgency_signal }}",
-            "affected_scope": "={{ $('Route + Escalate').item.json.affected_scope }}",
-            "actual_amount": "={{ $('Route + Escalate').item.json.actual_amount ?? '' }}",
-            "expected_amount": "={{ $('Route + Escalate').item.json.expected_amount ?? '' }}",
-            "discrepancy_amount": "={{ $('Route + Escalate').item.json.discrepancy_amount ?? '' }}",
+            "source": "={{ $('Append triage_records').item.json.source }}",
+            "raw_message": "={{ $('Append triage_records').item.json.category }}",
+            "message_id": "={{ $json.id }}",
+            "category": "={{ $('Append triage_records').item.json.category }}",
+            "priority": "={{ $('Append triage_records').item.json.priority }}",
+            "confidence_score": "={{ $('Append triage_records').item.json.confidence_score }}",
+            "core_issue": "={{ $('Append triage_records').item.json.core_issue }}",
+            "identifiers": "={{ $('Append triage_records').item.json.identifiers }}",
+            "urgency_signal": "={{ $('Append triage_records').item.json.urgency_signal }}",
+            "affected_scope": "={{ $('Append triage_records').item.json.affected_scope }}",
+            "actual_amount": "={{ $('Route + Escalate').item.json.actual_amount }}",
+            "expected_amount": "={{ $('Route + Escalate').item.json.expected_amount }}",
+            "discrepancy_amount": "={{ $('Route + Escalate').item.json.discrepancy_amount }}",
             "standard_queue": "={{ $('Route + Escalate').item.json.standard_queue }}",
             "destination_queue": "={{ $('Route + Escalate').item.json.destination_queue }}",
-            "escalation_flag": "={{ $('Route + Escalate').item.json.escalation_flag ? 'TRUE' : 'FALSE' }}",
-            "escalation_reason": "={{ $('Route + Escalate').item.json.escalation_reason ?? '' }}",
+            "escalation_flag": "={{ $('Route + Escalate').item.json.escalation_flag }}",
+            "escalation_reason": "={{ $('Route + Escalate').item.json.escalation_flag }}",
             "summary": "={{ $('Route + Escalate').item.json.summary }}",
             "processed_at": "={{ $('Route + Escalate').item.json.processed_at }}"
           },
@@ -611,13 +624,13 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        2400,
-        320
+        2384,
+        416
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "EbW0qhyUQxV80gFx",
-          "name": "Google Sheets OAuth2 API"
+          "id": "Itq093I7K4id3snf",
+          "name": "Google Sheets account 2"
         }
       }
     },
@@ -672,7 +685,7 @@
       "parameters": {
         "sendTo": "fakihshared44@gmail.com",
         "subject": "=[ArcVault Escalation] {{$json.priority}} - {{$json.category}} - {{$json.request_id}}",
-        "message": "=Hello,  A customer request has been flagged for human review by the ArcVault intake triage workflow.  Request ID: {{$json.request_id}} Message ID: {{$json.message_id}} Category: {{$json.category}} Priority: {{$json.priority}} Confidence Score: {{$json.confidence_score}}  Destination Queue: {{$json.destination_queue}} Standard Queue: {{$json.standard_queue}} Escalation Reason: {{$json.escalation_reason}}  Source: {{$json.source}} Customer Email: {{$json.customer_email || \"N/A\"}} Form Timestamp: {{$json.timestamp || \"N/A\"}} Processed At: {{$json.processed_at}}  Core Issue: {{$json.core_issue}}  Urgency Signal: {{$json.urgency_signal}}  Affected Scope: {{$json.affected_scope}}  Identifiers: {{JSON.stringify($json.identifiers, null, 2)}}  Original Message: {{$json.raw_message}}  Internal Summary: {{$json.summary}}  Please review and route/handle this case manually.  Best, ArcVault Intake Automation",
+        "message": "=<div style=\"font-family: Arial, sans-serif; font-size: 14px; color: #222; line-height: 1.5;\">\n  <h2 style=\"color: #b00020; margin-bottom: 6px;\">ArcVault Human Review Required</h2>\n\n  <p>\n    A customer request has been flagged for human review by the ArcVault intake triage workflow.\n  </p>\n\n  <hr />\n\n  <h3>Classification</h3>\n  <table style=\"border-collapse: collapse; width: 100%;\">\n    <tr>\n      <td><strong>Category</strong></td>\n      <td>{{$json.category}}</td>\n    </tr>\n    <tr>\n      <td><strong>Priority</strong></td>\n      <td>{{$json.priority}}</td>\n    </tr>\n    <tr>\n      <td><strong>Confidence Score</strong></td>\n      <td>{{$json.confidence_score}}</td>\n    </tr>\n    <tr>\n      <td><strong>Affected Scope</strong></td>\n      <td>{{$json.affected_scope}}</td>\n    </tr>\n  </table>\n\n  <h3>Routing & Escalation</h3>\n  <table style=\"border-collapse: collapse; width: 100%;\">\n    <tr>\n      <td><strong>Destination Queue</strong></td>\n      <td>{{$json.destination_queue}}</td>\n    </tr>\n    <tr>\n      <td><strong>Standard Queue</strong></td>\n      <td>{{$json.standard_queue}}</td>\n    </tr>\n    <tr>\n      <td><strong>Escalation Reason</strong></td>\n      <td>{{$json.escalation_reason || \"N/A\"}}</td>\n    </tr>\n  </table>\n\n  <h3>Request Metadata</h3>\n  <table style=\"border-collapse: collapse; width: 100%;\">\n    <tr>\n      <td><strong>Source</strong></td>\n      <td>{{$json.source}}</td>\n    </tr>\n    <tr>\n      <td><strong>Customer Email</strong></td>\n      <td>{{$json.customer_email || \"N/A\"}}</td>\n    </tr>\n    <tr>\n      <td><strong>Form Timestamp</strong></td>\n      <td>{{$json.timestamp || \"N/A\"}}</td>\n    </tr>\n    <tr>\n      <td><strong>Processed At</strong></td>\n      <td>{{$json.processed_at}}</td>\n    </tr>\n  </table>\n\n  <h3>Core Issue</h3>\n  <p style=\"background: #f7f7f7; padding: 10px; border-left: 4px solid #555;\">\n    {{$json.core_issue}}\n  </p>\n\n  <h3>Urgency Signal</h3>\n  <p>\n    {{$json.urgency_signal}}\n  </p>\n\n  <h3>Identifiers</h3>\n  <pre style=\"background: #f7f7f7; padding: 10px; border: 1px solid #ddd; white-space: pre-wrap;\">{{JSON.stringify($json.identifiers, null, 2)}}</pre>\n\n  <h3>Original Customer Message</h3>\n  <blockquote style=\"background: #fff8e1; padding: 10px; border-left: 4px solid #f2b600;\">\n    {{$json.raw_message}}\n  </blockquote>\n\n  <h3>Internal Summary</h3>\n  <p>\n    {{$json.summary}}\n  </p>\n\n  <hr />\n\n  <p>\n    Please review and route/handle this case manually.\n  </p>\n\n  <p>\n    Best,<br />\n    ArcVault Intake Automation\n  </p>\n</div>",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
@@ -745,6 +758,11 @@
             "node": "Send a message",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Append escalations",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -773,22 +791,16 @@
     },
     "Send a message": {
       "main": [
-        [
-          {
-            "node": "Append escalations",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "fd5b4798-40d3-468f-8fe6-c595c5d36cf9",
+  "versionId": "b766f629-4132-4df0-9f3d-8b544384acec",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "8b2eb953ab20666639ccb656db9a4403ea09e4d78870e3af407b7ee2514ffd54"

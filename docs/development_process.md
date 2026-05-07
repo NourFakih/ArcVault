@@ -21,7 +21,7 @@ The final implementation uses:
 
 ## AI-Assisted Development
 
-I used AI tools during the build process, mainly for planning, prompt design, and workflow scaffolding. I first discussed the architecture with Claude and ChatGPT to keep the design aligned with the assessment and avoid overcomplicating the implementation. After that, I used Codex to scaffold parts of the repository and generate an initial n8n workflow export.
+I used AI tools during the build process, mainly for planning, prompt design, and workflow scaffolding. I first discussed the architecture with Claude and ChatGPT to keep the design aligned with the assessment and avoid overcomplicating the implementation. Claude helped in my vision of making the project as simple as possible. After that, I used Codex to scaffold parts of the repository and generate an initial n8n workflow export.
 
 This was helpful for speed, but it also introduced some complexity that I had to manually correct. The initial scaffold mixed webhook-based and Google Sheets based approaches, which made the workflow more complicated than necessary. After rereading the assessment, I simplified the architecture and removed the webhook path, since Google Forms and Google Sheets already satisfied the automatic ingestion requirement.
 
@@ -49,7 +49,7 @@ For production, I would not rely on a Google Sheets formula for ID generation. I
 
 ## Cost and Prompt Tradeoff
 
-I used a small OpenAI model to keep the workflow inexpensive. I considered making the prompt shorter, but the output needed to include classification, confidence, enrichment, identifiers, urgency, routing-supporting fields, and an internal summary in one call. A more detailed prompt was therefore useful to reduce output variability and avoid requiring multiple LLM calls.
+I used a small OpenAI "chatgpt5.5-MINI" model to keep the workflow inexpensive. I considered making the prompt shorter, but the output needed to include classification, confidence, enrichment, identifiers, urgency, routing-supporting fields, and an internal summary in one call. A more detailed prompt was therefore useful to reduce output variability and avoid requiring multiple LLM calls. (n8n provide 2$ credit of openai api key usage)
 
 The final design uses one OpenAI call per message instead of separate calls for classification, enrichment, and summarization. This reduces latency, cost, and workflow complexity, while still producing all required fields for the assessment.
 
@@ -59,4 +59,4 @@ The final workflow is:
 
 `Google Form submission -> Google Sheets Trigger -> Normalize Input -> Filter Valid Rows -> OpenAI Triage -> Route + Escalate -> Append to triage_records -> IF escalation_flag = true -> Send Gmail escalation -> Append to escalations`
 
-This keeps the workflow simple, explainable, and aligned with the assessment requirements. Codex was useful for scaffolding, but the generated workflow required manual review and simplification because some initial design choices introduced unnecessary complexity.
+This keeps the workflow simple, explainable, and aligned with the assessment requirements. Codex was useful for scaffolding, but the generated workflow required manual review and simplification because some initial design choices introduced some complexities.
